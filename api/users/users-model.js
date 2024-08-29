@@ -18,6 +18,10 @@ function find() {
       }
     ]
    */
+  const result = await db("users as u")
+                .select("user_id","username","role_name")
+                .join("roles as r","u.role_id","r.role_id")
+  return result
 }
 
 function findBy(filter) {
