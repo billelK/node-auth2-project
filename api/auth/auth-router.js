@@ -19,7 +19,7 @@ router.post("/register", validateRoleName, (req, res, next) => {
 });
 
 
-router.post("/login", checkUsernameExists, (req, res, next) => {
+router.post("/login", checkUsernameExists, (req, res, next) => {// eslint-disable-line
   const {username, password} = req.body
   const user = req.user
   if (password && bcrypt.compareSync(password,user.password)) {
