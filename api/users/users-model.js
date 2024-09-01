@@ -1,4 +1,5 @@
 const db = require('../../data/db-config.js');
+const bcrypt = require("bcryptjs")
 
 async function find() {
   /**
@@ -92,6 +93,8 @@ async function add({ username, password, role_name }) { // done for you
       const [role_id] = await trx('roles').insert({ role_name: role_name })
       role_id_to_use = role_id
     }
+    const bcryptedPass = bcrypt.hashSync(password, 8)
+    password = bcryptedPass
     const [user_id] = await trx('users').insert({ username, password, role_id: role_id_to_use })
     created_user_id = user_id
   })

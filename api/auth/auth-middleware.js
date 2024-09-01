@@ -86,9 +86,6 @@ const checkUsernameExists = (req, res, next) => {
 
 
 const validateRoleName = (req, res, next) => {
-  
-  
-  console.log("rolename",req.body.role_name);
   if(req.body.role_name) {
     req.body.role_name = req.body.role_name.trim()
     const {role_name} = req.body

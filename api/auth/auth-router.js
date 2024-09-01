@@ -30,6 +30,8 @@ router.post("/login", checkUsernameExists, (req, res, next) => {// eslint-disabl
   const user = req.user
   if (password && bcrypt.compareSync(password,user.password)) {
     const token = tokenMaker(user)
+    req.body.token = token
+
     res.status(200).json({
       message: `${username} is back!`,
       token: token
@@ -63,8 +65,8 @@ router.post("/login", checkUsernameExists, (req, res, next) => {// eslint-disabl
 function tokenMaker (user) {
   const payload = {
     subject: user.user_id,
+    role: user.role_name,
     username: user.username,
-    role: user.role_name
   }
   const options = {
     expiresIn: "1d",
