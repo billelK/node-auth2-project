@@ -3,8 +3,14 @@ const { checkUsernameExists, validateRoleName } = require('./auth-middleware');
 const bcrypt = require("bcryptjs")
 const { JWT_SECRET } = require("../secrets"); // use this secret!
 const jwt = require("jsonwebtoken")
+const model = require("../users/users-model")
 
 router.post("/register", validateRoleName, (req, res, next) => {
+  model.add(req.body)
+    .then(newUser => {
+      res.status(201).json(newUser)
+    })
+    .catch(next)
   /**
     [POST] /api/auth/register { "username": "anna", "password": "1234", "role_name": "angel" }
 

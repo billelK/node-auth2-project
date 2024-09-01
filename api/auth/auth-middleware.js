@@ -45,6 +45,8 @@ const only = role_name => (req, res, next) => {
     res.status(403).json({
       message: "This is not for you"
     })
+  } else {
+    next()
   }
   /*
     If the user does not provide a token in the Authorization header with a role_name
@@ -84,6 +86,28 @@ const checkUsernameExists = (req, res, next) => {
 
 
 const validateRoleName = (req, res, next) => {
+  
+  
+  console.log("rolename",req.body.role_name);
+  if(req.body.role_name) {
+    req.body.role_name = req.body.role_name.trim()
+    const {role_name} = req.body
+    if(role_name.length > 32) {
+      next({
+        status: 422,
+        message: "Role name can not be longer than 32 chars"
+      })
+    } else if(role_name === "admin") {
+      next({
+        status: 422,
+        message: "Role name can not be admin"
+      })
+    }
+    next()
+  } else {
+    req.body.role_name = "student"
+    next()
+  }
   /*
     If the role_name in the body is valid, set req.role_name to be the trimmed string and proceed.
 
