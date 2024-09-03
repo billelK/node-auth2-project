@@ -65,7 +65,7 @@ router.post("/login", checkUsernameExists, (req, res, next) => {// eslint-disabl
 function tokenMaker (user) {
   const payload = {
     subject: user.user_id,
-    role: user.role_name,
+    role_name: user.role_name,
     username: user.username,
   }
   const options = {

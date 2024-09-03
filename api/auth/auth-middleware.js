@@ -13,6 +13,8 @@ const restricted = (req, res, next) => {
         })
       } else {
         req.decodedJWT = decoded
+        // console.log(decoded);
+        
         next()
       }
     })
@@ -41,7 +43,7 @@ const restricted = (req, res, next) => {
 }
 
 const only = role_name => (req, res, next) => {
-  if (role_name !== req.decodedJWT.role) {
+  if (role_name !== req.decodedJWT.role_name) {
     res.status(403).json({
       message: "This is not for you"
     })
